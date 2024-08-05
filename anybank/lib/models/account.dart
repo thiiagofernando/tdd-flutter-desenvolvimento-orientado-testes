@@ -3,6 +3,7 @@ class Account {
   final String name;
   final String cpf;
   double balance;
+
   Account({
     required this.id,
     required this.name,
@@ -10,7 +11,11 @@ class Account {
     required this.balance,
   });
 
-  void transfer(amount) {
-    balance = balance - amount;
+  void transfer(double? ammout) {
+    if (ammout != null) {
+      if (ammout <= balance && ammout > 0) {
+        balance = balance - ammout;
+      }
+    }
   }
 }
