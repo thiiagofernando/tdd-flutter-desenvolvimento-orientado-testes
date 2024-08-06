@@ -13,18 +13,44 @@ class InvalidAmmountException implements Exception {
   String toString() => 'O valor da transferencia deve ser maior que zero';
 }
 
+enum AcctounType {
+  checkings,
+  savings,
+  investiment,
+}
+
 class Account {
   final int id;
   final String name;
   final String cpf;
   double balance;
+  AcctounType acctounType;
 
   Account({
     required this.id,
     required this.name,
     required this.cpf,
     required this.balance,
+    this.acctounType = AcctounType.checkings,
   });
+
+  void applayInterest() {
+    double interest;
+    switch (acctounType) {
+      case AcctounType.checkings:
+        interest = 0.01;
+        break;
+      case AcctounType.savings:
+        interest = 0.03;
+        break;
+      case AcctounType.investiment:
+        interest = 0.07;
+        break;
+      default:
+        interest = 0.01;
+    }
+    balance += balance * interest;
+  }
 
   void transfer(double? ammout) {
     if (ammout == null) {

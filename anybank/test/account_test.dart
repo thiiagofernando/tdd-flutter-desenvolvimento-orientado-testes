@@ -8,6 +8,25 @@ void main() {
       account = Account(id: 123, name: 'Maria', balance: 100, cpf: '123.123.123-09');
     },
   );
+  group('Account interest rates', () {
+    test('Deve se aplicar um juros de 1% quando tipo de conta for conta corrente', () {
+      account.applayInterest();
+      expect(account.balance, 101);
+    });
+    test('Deve se aplicar um juros de 3% quando tipo de conta for conta poupança', () {
+      final Account accountSave =
+          Account(id: 123, name: 'Maria', balance: 100, cpf: '123.123.123-09', acctounType: AcctounType.savings);
+      accountSave.applayInterest();
+      expect(accountSave.balance, 103);
+    });
+    test('Deve se aplicar um juros de 7% quando tipo de conta for conta investimento', () {
+      final Account accountInvestiment =
+          Account(id: 123, name: 'Maria', balance: 100, cpf: '123.123.123-09', acctounType: AcctounType.investiment);
+      accountInvestiment.applayInterest();
+      expect(accountInvestiment.balance, 107);
+    });
+  });
+
   group('Account Tranfer Tests', () {
     test('Deve atualizar corretamente o valor do saldo , quando a transferencia for válida', () {
       account.transfer(100);
