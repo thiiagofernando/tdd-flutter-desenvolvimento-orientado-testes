@@ -8,27 +8,21 @@ void main() {
       account = Account(id: 123, name: 'Maria', balance: 100, cpf: '123.123.123-09');
     },
   );
-  group('Testes de Transferencias', () {
-    test('Testa uma transferencia com sucesso', () {
+  group('Account Tranfer Tests', () {
+    test('Deve atualizar corretamente o valor do saldo , quando a transferencia for válida', () {
       account.transfer(100);
       expect(account.balance, 0);
     });
-    test('Testa uma transferencia com valor negativo', () {
-      account.transfer(-100);
-      expect(account.balance, 100);
+    test('Deve lancar um InvalidAmmountException quando passar um valor invalido', () {
+      expect(() => account.transfer(0), throwsA(isA<InvalidAmmountException>()));
+      expect(() => account.transfer(-10), throwsA(isA<InvalidAmmountException>()));
     });
-    test('Transfere qualquer coisa que nao seja numeros', () {});
-    test('Testa uma transferencia com valor maior que o disponivel', () {
-      account.transfer(110);
-      expect(account.balance, 100);
+    test('Deve lançar InsuficientAmmountException quando o valor de transferencia for maior que o saldo disponivel',
+        () {
+      expect(() => account.transfer(110), throwsA(isA<InsuficientAmmountException>()));
     });
-    test('Testa uma transferencia com valor zero', () {
-      account.transfer(0);
-      expect(account.balance, 100);
-    });
-    test('Testa uma transferencia com valor null', () {
-      account.transfer(null);
-      expect(account.balance, 100);
+    test('Deve lançar NullAmmountException quando o valor de uma tranferencia for nulo', () {
+      expect(() => account.transfer(null), throwsA(isA<NullAmmountException>()));
     });
   });
 }
